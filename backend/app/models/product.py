@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Text, ForeignKey, DateTime
+from sqlalchemy import Column, Integer, String, Text, ForeignKey, DateTime, func
 from sqlalchemy.orm import relationship
 from ..database import Base
 
@@ -10,7 +10,7 @@ class Category(Base):
     description = Column(Text)
     category_id = Column(Integer, ForeignKey('categories.id'), nullable=False)
     image_url = Column(String)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, server_default=func.now())
     
     category = relationship('Category', back_populates='products')
     
