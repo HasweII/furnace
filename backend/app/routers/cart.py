@@ -36,7 +36,7 @@ def add_to_cart(request: AddToCartRequest, db: Session = Depends(get_db)):
     updated_cart = services.add_to_cart(request.cart, item)
     return {"cart": updated_cart}
 
-@router.put("/update", status_code=status.HTTP_200_CREATED)
+@router.put("/update", status_code=status.HTTP_200_OK)
 def update_cart_item(request: UpdateCartRequest, db: Session = Depends(get_db)):
     services = CartService(db)
     item = CartItemUpdate(product_id=request.product_id, review=request.review)
