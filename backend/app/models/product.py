@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, String, Text, ForeignKey, DateTime, func
 from sqlalchemy.orm import relationship
 from ..database import Base
 
-class Category(Base):
+class Product(Base):
     __tablename__ = 'products'
     
     id = Column(Integer, primary_key=True, index=True)
