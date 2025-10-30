@@ -13,7 +13,7 @@ router = APIRouter(
 @router.get("", response_model=List[CategoryResponse], status_code=status.HTTP_200_OK)
 def get_categories(db: Session = Depends(get_db)):
     services = CategoryService(db)
-    return services.get_all_categories(db)
+    return services.get_all_categories()
 
 @router.get("/{category_id}", response_model=CategoryResponse, status_code=status.HTTP_200_OK)
 def get_category(category_id: int, db: Session = Depends(get_db)):
