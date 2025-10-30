@@ -8,8 +8,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from .config import settings
-from .database import init_db
-from .routers import products_router, categories_router, cart_router
+from .database import SessionLocal, init_db
+from .models.product import Product
+from .routers import cart_router, categories_router, products_router
+from .seed_data import seed
 
 
 def _resolve_under_app(path_str: str) -> Path:
@@ -22,6 +24,16 @@ def _resolve_under_app(path_str: str) -> Path:
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     init_db()
+
+    session = SessionLocal()
+    try:
+        has_products = session.query(Product.id).limit(1).first() is not None
+    finally:
+        session.close()
+
+    if not has_products:
+        seed()
+
     try:
         yield
     finally:
