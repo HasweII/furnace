@@ -9,7 +9,7 @@ router = APIRouter(
     tags=["products"]
 )
 
-@router.get("/", response_model=ProductListResponse, status_code=status.HTTP_200_OK)
+@router.get("", response_model=ProductListResponse, status_code=status.HTTP_200_OK)
 def get_products(db: Session = Depends(get_db)):
     services = ProductService(db)
     return services.get_all_products()
